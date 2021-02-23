@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Goodliffe Pete\"\r\n}",
+							"raw": "{\r\n    \"nome\": \"Cecília Mary Fischer Rubira\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -116,6 +116,252 @@
 							"path": [
 								"autores",
 								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Editora",
+			"item": [
+				{
+					"name": "findAllPaginator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/editoras",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"editoras"
+							],
+							"query": [
+								{
+									"key": "razaoSocial",
+									"value": "Alta",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"razao_social\": \"EDITORA CIENCIA MODERNA LTDA\",\r\n    \"cnpj\": \"32.221.186/0001-03\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/editoras",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"editoras"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/editoras/1",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"editoras",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"razao_social\": \"STARLIN ALTA EDITORA E CONSULTORIA - EIRELI\",\r\n    \"cnpj\": \"04.713.695/0001-00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/editoras/2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"editoras",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/editoras/2",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"editoras",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Livro",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Programação Orientada a Objetos Usando Java\",\r\n    \"isbn\": \"9788539910151\",\r\n    \"preco\": 79.00,\r\n    \"data_publicacao\": \"03/04/2019\",\r\n    \"id_editora\": 3,\r\n    \"autores\": [\r\n                {\r\n                    \"id\": 4,\r\n                    \"nome\": \"Cecília Mary Fischer Rubira\"\r\n                }\r\n    ],\r\n    \"criticas\": [\r\n                {\r\n                    \"nome\": \"josé carlos de lima\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                },\r\n                {\r\n                    \"nome\": \"pedro souza cruz\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/livros",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"livros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllPaginator",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/livros",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"livros"
+							],
+							"query": [
+								{
+									"key": "isbn",
+									"value": "8550804606",
+									"disabled": true
+								},
+								{
+									"key": "titulo",
+									"value": "limpa",
+									"disabled": true
+								},
+								{
+									"key": "editora",
+									"value": "ciencia",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/livros/21",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"livros",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Programação Orientada a Objetos Usando grgr\",\r\n    \"isbn\": \"9788539910151\",\r\n    \"preco\": 79.00,\r\n    \"data_publicacao\": \"03/04/2019\",\r\n    \"id_editora\": 3    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_URL}}/livros/21",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"livros",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{API_URL}}/livros/21",
+							"host": [
+								"{{API_URL}}"
+							],
+							"path": [
+								"livros",
+								"21"
 							]
 						}
 					},
