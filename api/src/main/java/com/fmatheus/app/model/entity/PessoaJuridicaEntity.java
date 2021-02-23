@@ -1,5 +1,6 @@
 package com.fmatheus.app.model.entity;
 
+import com.fmatheus.app.controller.util.AppUtil;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -44,7 +45,7 @@ public class PessoaJuridicaEntity extends BaseEntity {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 14, max = 20)
     @Column(name = "cnpj", nullable = false, length = 20)
     private String cnpj;
 
@@ -73,19 +74,25 @@ public class PessoaJuridicaEntity extends BaseEntity {
     }
 
     public String getRazaoSocial() {
+        if (razaoSocial != null) {
+            return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeDuplicateSpace(razaoSocial));
+        }
         return razaoSocial;
     }
 
     public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
+        this.razaoSocial = AppUtil.convertAllUppercaseCharacters(AppUtil.removeDuplicateSpace(razaoSocial));
     }
 
     public String getCnpj() {
+        if (cnpj != null) {
+            return AppUtil.formatCNPJ(cnpj);
+        }
         return cnpj;
     }
 
     public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+        this.cnpj = AppUtil.removeSpecialCharacters(cnpj);
     }
 
     public PessoaEntity getIdPessoa() {
