@@ -12,19 +12,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import com.fmatheus.app.controller.dto.AutorDto;
+import com.fmatheus.app.controller.dto.LivroDto;
+import com.fmatheus.app.controller.dto.LivroUpdateDto;
 import com.fmatheus.app.controller.enumerable.MessagesEnum;
 import com.fmatheus.app.controller.event.ResourceEvent;
 import com.fmatheus.app.controller.exception.BadRequestException;
-import com.fmatheus.app.model.entity.AutorEntity;
+import com.fmatheus.app.model.entity.LivroEntity;
 import com.fmatheus.app.model.persistence.repository.RepositoryFilter;
-import com.fmatheus.app.model.persistence.service.impl.AutorServiceImpl;
-import com.fmatheus.app.model.persistence.service.impl.PessoaServiceImpl;
+import com.fmatheus.app.model.persistence.service.impl.LivroServiceImpl;
 
 @Component
-public class AutorRule {
+public class LivroRule {
 
-    private static final Logger log = LoggerFactory.getLogger(AutorRule.class);
+    private static final Logger log = LoggerFactory.getLogger(LivroRule.class);
 
     @Autowired
     private MessageResponseRule messageResponseRule;
@@ -34,45 +34,51 @@ public class AutorRule {
     private ApplicationEventPublisher publisher;
 
     @Autowired
-    private AutorServiceImpl autorServiceImpl;
-
-    @Autowired
-    private PessoaServiceImpl pessoaServiceImpl;
+    private LivroServiceImpl livroServiceImpl;
 
     /**
-     * Lista os autores
+     * Lista os livros
      *
      * @param pageable
      * @param filter
      * @return ResponseEntity
      *
      */
-    public ResponseEntity<Page<AutorDto>> findAllPaginator(Pageable pageable, RepositoryFilter filter) {
-        Page<AutorEntity> employees = autorServiceImpl.findAllFilter(filter, pageable);
-        return !employees.isEmpty() ? ResponseEntity.ok(employees.map(AutorDto::converterDto))
+    public ResponseEntity<Page<LivroDto>> findAllPaginator(Pageable pageable, RepositoryFilter filter) {
+        Page<LivroEntity> employees = livroServiceImpl.findAllFilter(filter, pageable);
+        return !employees.isEmpty() ? ResponseEntity.ok(employees.map(LivroDto::converterDto))
                 : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     /**
-     * Cadastrar autor
+     * Cadastrar livro
      *
      * @param dto
      * @param response
      * @return ResponseEntity
      *
      */
-    public ResponseEntity<?> create(AutorDto dto, HttpServletResponse response) {
+    public ResponseEntity<?> create(LivroDto dto, HttpServletResponse response) {
 
-        var entity = new AutorDto().create(dto);
-        entity = pessoaServiceImpl.save(entity);
+        var livro = livroServiceImpl.findByIsbn(dto.getIsbn());
+        if (livro != null) {
+            String message = MessagesEnum.ERROR_ISBN_EXIST.getDescription();
+            log.warn(message);
+            throw new BadRequestException(message);
+        }
+
+        var entity = new LivroDto().create(dto);
+        entity = livroServiceImpl.save(entity);   
+        
+      //  LivroEntity l=livroServiceImpl.findById(entity.getId()).orElse(null);
 
         publisher.publishEvent(new ResourceEvent(this, response, entity.getId()));
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(AutorDto.converterDto(entity.getPessoaFisicaEntity().getAutorEntity()));
+                .body(LivroDto.converterDto(entity));
     }
 
     /**
-     * Atualizar autor
+     * Atualizar livro
      *
      * @param id
      * @param dto
@@ -80,26 +86,26 @@ public class AutorRule {
      * @return ResponseEntity
      * @throws BadRequestException
      */
-    public ResponseEntity<?> update(int id, AutorDto dto, HttpServletResponse response) {
+    public ResponseEntity<?> update(int id, LivroUpdateDto dto, HttpServletResponse response) {
 
-        /* Verifica se ao ID do autor existe */
-        var autor = autorServiceImpl.findById(id).orElse(null);
-        if (autor == null) {
+        /* Verifica se ao ID do livro existe */
+        var livro = livroServiceImpl.findById(id).orElse(null);
+        if (livro == null) {
             String message = MessagesEnum.ERROR_BAD_REQUEST.getDescription();
             log.warn(message);
             throw new BadRequestException(message);
         }
 
-        var pessoa = new AutorDto().update(autor.getIdPessoaFisica().getIdPessoa(), dto);
-        var entity = pessoaServiceImpl.save(pessoa);
+        var entity = new LivroUpdateDto().update(livro, dto);
+        entity = livroServiceImpl.save(entity);
 
-        publisher.publishEvent(new ResourceEvent(this, response, pessoa.getPessoaFisicaEntity().getAutorEntity().getId()));
+        publisher.publishEvent(new ResourceEvent(this, response, livro.getId()));
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(AutorDto.converterDto(entity.getPessoaFisicaEntity().getAutorEntity()));
+                .body(LivroDto.converterDto(entity));
     }
 
     /**
-     * Pesquisar autor
+     * Pesquisar livro
      *
      * @param id
      * @return ResponseEntity
@@ -107,23 +113,23 @@ public class AutorRule {
      */
     public ResponseEntity<?> findById(int id) {
 
-        var autor = autorServiceImpl.findById(id).orElse(null);
-        if (autor == null) {
+        var livro = livroServiceImpl.findById(id).orElse(null);
+        if (livro == null) {
             String message = MessagesEnum.ERROR_BAD_REQUEST.getDescription();
             log.warn(message);
             throw new BadRequestException(message);
         }
 
-        var autorDto = AutorDto.converterDto(autor);
+        var livroDto = LivroDto.converterDto(livro);
 
-        return autor != null ? ResponseEntity.ok(autorDto)
+        return livro != null ? ResponseEntity.ok(livroDto)
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(messageResponseRule.messageResponseBadRequest());
 
     }
 
     /**
-     * Excluir autor
+     * Excluir livro
      *
      * @param id
      * @return ResponseEntity
@@ -131,15 +137,15 @@ public class AutorRule {
      */
     public ResponseEntity<?> delete(int id) {
 
-        /* Verifica se ao ID do autor existe */
-        var autor = autorServiceImpl.findById(id).orElse(null);
-        if (autor == null) {
+        /* Verifica se ao ID do livro existe */
+        var livro = livroServiceImpl.findById(id).orElse(null);
+        if (livro == null) {
             String message = MessagesEnum.ERROR_BAD_REQUEST.getDescription();
             log.warn(message);
             throw new BadRequestException(message);
         }
 
-        pessoaServiceImpl.delete(autor.getIdPessoaFisica().getIdPessoa());
+        livroServiceImpl.delete(livro);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(messageResponseRule.messageResponseSuccessDelete());

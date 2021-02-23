@@ -4,8 +4,11 @@ import br.com.caelum.stella.ValidationMessage;
 import br.com.caelum.stella.format.CNPJFormatter;
 import br.com.caelum.stella.format.CPFFormatter;
 import br.com.caelum.stella.format.Formatter;
+import br.com.caelum.stella.inwords.FormatoDeReal;
+import br.com.caelum.stella.inwords.NumericToWordsConverter;
 import br.com.caelum.stella.validation.CNPJValidator;
 import br.com.caelum.stella.validation.CPFValidator;
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -106,6 +109,13 @@ public class AppUtil {
             }
         }
         return false;
+    }
+    
+    public static String valueWords(double value) {
+        NumericToWordsConverter converter;  
+        converter = new NumericToWordsConverter(new FormatoDeReal());          
+        String extenso = converter.toWords(value);
+        return extenso;
     }
 
 }
