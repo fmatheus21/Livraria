@@ -1,4 +1,4 @@
-package com.fmatheus.app.model.persistence.repository.impl;
+package com.fmatheus.app.model.persistence.service.impl;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,13 +22,13 @@ import com.fmatheus.app.model.persistence.service.BaseService;
  */
 @Service
 @Transactional
-public abstract class BaseRepositoryImpl<T extends BaseEntity, ID extends Serializable>
+public abstract class BaseServiceImpl<T extends BaseEntity, ID extends Serializable>
         implements BaseService<T, ID> {
 
     private final BaseRepository<T, ID> baseRepository;
 
     @Autowired
-    public BaseRepositoryImpl(BaseRepository<T, ID> baseRepository) {
+    public BaseServiceImpl(BaseRepository<T, ID> baseRepository) {
         this.baseRepository = baseRepository;
     }
 

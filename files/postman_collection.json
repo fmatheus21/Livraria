@@ -58,7 +58,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{API_URL}}/autores",
+							"raw": "{{API_URL}}/autores?nome=Martin",
 							"host": [
 								"{{API_URL}}"
 							],
@@ -68,8 +68,7 @@
 							"query": [
 								{
 									"key": "nome",
-									"value": "Pete",
-									"disabled": true
+									"value": "Martin"
 								}
 							]
 						}
@@ -251,7 +250,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"titulo\": \"Programação Orientada a Objetos Usando Java\",\r\n    \"isbn\": \"9788539910151\",\r\n    \"preco\": 79.00,\r\n    \"data_publicacao\": \"03/04/2019\",\r\n    \"id_editora\": 3,\r\n    \"autores\": [\r\n                {\r\n                    \"id\": 4,\r\n                    \"nome\": \"Cecília Mary Fischer Rubira\"\r\n                }\r\n    ],\r\n    \"criticas\": [\r\n                {\r\n                    \"nome\": \"josé carlos de lima\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                },\r\n                {\r\n                    \"nome\": \"pedro souza cruz\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"titulo\": \"Programação Orientada a Objetos Usando Java\",\r\n    \"isbn\": \"9788539910151\",\r\n    \"preco\": 79.00,\r\n    \"data_publicacao\": \"03/04/2019\",\r\n    \"id_editora\": 3,\r\n    \"autores\": [\r\n                {\r\n                    \"id\": 5,\r\n                    \"nome\": \"Cecília Mary Fischer Rubira\"\r\n                },\r\n                {\r\n                    \"id\": 2,\r\n                    \"nome\": \"Cecília Mary Fischer Rubira\"\r\n                }\r\n    ],\r\n    \"criticas\": [\r\n                {\r\n                    \"nome\": \"josé carlos de lima\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                },\r\n                {\r\n                    \"nome\": \"pedro souza cruz\",\r\n                    \"critica\": \"Aqui será informado a crítica\"\r\n                }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

@@ -3,7 +3,6 @@ package com.fmatheus.app.model.persistence.service.impl;
 import com.fmatheus.app.model.entity.LivroEntity;
 import com.fmatheus.app.model.persistence.repository.LivroRepository;
 import com.fmatheus.app.model.persistence.repository.RepositoryFilter;
-import com.fmatheus.app.model.persistence.repository.impl.BaseRepositoryImpl;
 import com.fmatheus.app.model.persistence.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public class LivroServiceImpl extends BaseRepositoryImpl<LivroEntity, Integer> implements LivroService {
+public class LivroServiceImpl extends BaseServiceImpl<LivroEntity, Integer> implements LivroService {
 
     @Autowired
     private LivroRepository repository;

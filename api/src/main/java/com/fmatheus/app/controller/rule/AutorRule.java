@@ -48,8 +48,8 @@ public class AutorRule {
      *
      */
     public ResponseEntity<Page<AutorDto>> findAllPaginator(Pageable pageable, RepositoryFilter filter) {
-        Page<AutorEntity> employees = autorServiceImpl.findAllFilter(filter, pageable);
-        return !employees.isEmpty() ? ResponseEntity.ok(employees.map(AutorDto::converterDto))
+        Page<AutorEntity> autores = autorServiceImpl.findAllFilter(filter, pageable);
+        return !autores.isEmpty() ? ResponseEntity.ok(autores.map(AutorDto::converterDto))
                 : ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
