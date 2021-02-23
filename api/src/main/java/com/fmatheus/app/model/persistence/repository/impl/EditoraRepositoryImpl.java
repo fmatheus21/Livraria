@@ -17,27 +17,27 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import com.fmatheus.app.model.entity.AutorEntity;
-import com.fmatheus.app.model.entity.PessoaFisicaEntity;
+import com.fmatheus.app.model.entity.EditoraEntity;
+import com.fmatheus.app.model.entity.PessoaJuridicaEntity;
 import com.fmatheus.app.model.persistence.repository.RepositoryFilter;
-import com.fmatheus.app.model.persistence.repository.query.AutorRepositoryQuery;
+import com.fmatheus.app.model.persistence.repository.query.EditoraRepositoryQuery;
 import javax.persistence.criteria.Join;
 
-public class AutorRepositoryImpl implements AutorRepositoryQuery {
+public class EditoraRepositoryImpl implements EditoraRepositoryQuery {
 
     @PersistenceContext
     private EntityManager manager;
 
     @Override
-    public Page<AutorEntity> filter(RepositoryFilter filter, Pageable pageable) {
+    public Page<EditoraEntity> filter(RepositoryFilter filter, Pageable pageable) {
 
         CriteriaBuilder builder = manager.getCriteriaBuilder();
-        CriteriaQuery<AutorEntity> criteriaQuery = builder.createQuery(AutorEntity.class);
-        Root<AutorEntity> root = criteriaQuery.from(AutorEntity.class);
+        CriteriaQuery<EditoraEntity> criteriaQuery = builder.createQuery(EditoraEntity.class);
+        Root<EditoraEntity> root = criteriaQuery.from(EditoraEntity.class);
         Predicate[] predicates = createRestrictions(filter, builder, root);
         criteriaQuery.where(predicates);
 
-        TypedQuery<AutorEntity> typedQuery = manager.createQuery(criteriaQuery);
+        TypedQuery<EditoraEntity> typedQuery = manager.createQuery(criteriaQuery);
 
         this.addPageRestrictions(typedQuery, pageable);
 
@@ -46,22 +46,22 @@ public class AutorRepositoryImpl implements AutorRepositoryQuery {
     }
 
     private Predicate[] createRestrictions(RepositoryFilter filter, CriteriaBuilder builder,
-            Root<AutorEntity> root) {
+            Root<EditoraEntity> root) {
 
         List<Predicate> predicates = new ArrayList<>();
-
-        Join<PessoaFisicaEntity, AutorEntity> join = root.join(AtributoEnum.ID_PESSOA_FISICA.getDescription());
-
-        if (!StringUtils.isEmpty(filter.getNome())) {
-            predicates.add(builder.like(builder.lower(join.<String>get(AtributoEnum.NOME.getDescription())),
-                    "%" + filter.getNome().toLowerCase() + "%"));
+      
+        Join<PessoaJuridicaEntity, EditoraEntity> join = root.join(AtributoEnum.ID_PESSOA_JURIDICA.getDescription());
+       
+        if (!StringUtils.isEmpty(filter.getRazaoSocial())) {
+            predicates.add(builder.like(builder.lower(join.<String>get(AtributoEnum.RAZAO_SOCIAL.getDescription())),
+                    "%" + filter.getRazaoSocial().toLowerCase() + "%"));
         }
 
         return predicates.toArray(new Predicate[predicates.size()]);
 
     }
 
-    private void addPageRestrictions(TypedQuery<AutorEntity> typedQuery, Pageable pageable) {
+    private void addPageRestrictions(TypedQuery<EditoraEntity> typedQuery, Pageable pageable) {
         int currentPage = pageable.getPageNumber();
         int totalRecordsPerPage = pageable.getPageSize();
         int firstPageRecord = currentPage * totalRecordsPerPage;
@@ -73,7 +73,7 @@ public class AutorRepositoryImpl implements AutorRepositoryQuery {
     private Long total(RepositoryFilter filter) {
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = builder.createQuery(Long.class);
-        Root<AutorEntity> root = criteriaQuery.from(AutorEntity.class);
+        Root<EditoraEntity> root = criteriaQuery.from(EditoraEntity.class);
 
         Predicate[] predicates = createRestrictions(filter, builder, root);
         criteriaQuery.where(predicates);
