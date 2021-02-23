@@ -1,7 +1,7 @@
 package com.fmatheus.app.controller.resource;
 
-import com.fmatheus.app.controller.dto.AutorDto;
-import com.fmatheus.app.controller.rule.AutorRule;
+import com.fmatheus.app.controller.dto.EditoraDto;
+import com.fmatheus.app.controller.rule.EditoraRule;
 import com.fmatheus.app.model.persistence.repository.RepositoryFilter;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -27,59 +27,59 @@ import io.swagger.annotations.ApiResponses;
  * @author fmatheus
  */
 @RestController
-@RequestMapping("/autores")
-public class AutorResource {
+@RequestMapping("/editoras")
+public class EditoraResource {
 
     @Autowired
-    private AutorRule autorRule;
+    private EditoraRule editoraRule;
 
-    @ApiOperation(value = "Listar autores")
+    @ApiOperation(value = "Listar Editoras")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Retornar Lista"),
         @ApiResponse(code = 204, message = "Sem Conteúdo"),
         @ApiResponse(code = 500, message = "Erro no Servidor"),})
     @GetMapping()
-    public ResponseEntity<Page<AutorDto>> list(Pageable pageable, RepositoryFilter filter) {
-        return autorRule.findAllPaginator(pageable, filter);
+    public ResponseEntity<Page<EditoraDto>> list(Pageable pageable, RepositoryFilter filter) {
+        return editoraRule.findAllPaginator(pageable, filter);
     }
 
-    @ApiOperation(value = "Visualizar um autor")
+    @ApiOperation(value = "Visualizar um editora")
     @ApiResponses(value = {
         @ApiResponse(code = 200, message = "Retorna o Registro"),
         @ApiResponse(code = 204, message = "Sem Conteúdo"),
         @ApiResponse(code = 500, message = "Erro no Servidor"),})
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable int id) {
-        return autorRule.findById(id);
+        return editoraRule.findById(id);
     }
 
-    @ApiOperation(value = "Registrar novo autor")
+    @ApiOperation(value = "Registrar novo editora")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Registro Criado"),
         @ApiResponse(code = 500, message = "Erro no Servidor"),})
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody @Valid AutorDto dto, HttpServletResponse response) {
-        return autorRule.create(dto, response);
+    public ResponseEntity<?> post(@RequestBody @Valid EditoraDto dto, HttpServletResponse response) {
+        return editoraRule.create(dto, response);
     }
 
-    @ApiOperation(value = "Atualizar autor")
+    @ApiOperation(value = "Atualizar editora")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Registro Atualizado"),
         @ApiResponse(code = 400, message = "Solicitação Inválida"),
         @ApiResponse(code = 500, message = "Erro no Servidor"),})
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable int id, @RequestBody @Valid AutorDto dto, HttpServletResponse response) {
-        return autorRule.update(id, dto, response);
+    public ResponseEntity<?> put(@PathVariable int id, @RequestBody @Valid EditoraDto dto, HttpServletResponse response) {
+        return editoraRule.update(id, dto, response);
     }
 
-    @ApiOperation(value = "Ecluir autor")
+    @ApiOperation(value = "Ecluir editora")
     @ApiResponses(value = {
         @ApiResponse(code = 201, message = "Registro Atualizado"),
         @ApiResponse(code = 400, message = "Solicitação Inválida"),
         @ApiResponse(code = 500, message = "Erro no Servidor"),})
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
-        return autorRule.delete(id);
+        return editoraRule.delete(id);
     }
 
 }
