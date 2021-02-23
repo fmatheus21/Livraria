@@ -11,7 +11,8 @@ public enum MessagesEnum {
     ERROR_NOT_FOUND("message.error.not.found"),
     ERROR_REGISTER_EXIST("message.error.register.exist"),
     ERROR_NOT_PERMISSION("message.error.not.permission"),
-    ERROR_BAD_REQUEST("message.error.bad.request");
+    ERROR_BAD_REQUEST("message.error.bad.request"),
+    ERROR_ISBN_EXIST("message.error.isbn.exist");
 
     @Getter
     private final String description;
