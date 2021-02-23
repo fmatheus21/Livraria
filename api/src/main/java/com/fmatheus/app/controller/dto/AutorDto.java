@@ -101,9 +101,11 @@ public class AutorDto extends RepresentationModel<AutorDto> {
         var dto = new AutorDto();
 
         dto.setId(entity.getId());
-        dto.setNome(entity.getIdPessoaFisica().getNome());
         dto.setDataCadastro(entity.getDataCadastro());
         dto.setDataAlteracao(entity.getDataAlteracao());
+        if (entity.getIdPessoaFisica() != null) {
+            dto.setNome(entity.getIdPessoaFisica().getNome());
+        }
 
         var link = new AutorLink();
         dto.add(link.linkView(entity.getId()));
