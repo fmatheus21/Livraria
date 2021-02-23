@@ -1,5 +1,6 @@
 package com.fmatheus.app.model.entity;
 
+import com.fmatheus.app.controller.util.AppUtil;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +35,12 @@ public class LivroCriticaEntity extends BaseEntity {
 
     @Basic(optional = false)
     @NotNull
+    @Size(min = 5, max = 70)
+    @Column(name = "nome", nullable = false, length = 70)
+    private String nome;
+
+    @Basic(optional = false)
+    @NotNull
     @Lob
     @Size(min = 1, max = 16777215)
     @Column(name = "critica", nullable = false, length = 16777215)
@@ -58,6 +65,17 @@ public class LivroCriticaEntity extends BaseEntity {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        if (nome != null) {
+            return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeDuplicateSpace(nome));
+        }
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = AppUtil.convertAllUppercaseCharacters(AppUtil.removeDuplicateSpace(nome));
     }
 
     public String getCritica() {

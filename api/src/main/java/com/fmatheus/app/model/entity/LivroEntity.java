@@ -1,21 +1,22 @@
 package com.fmatheus.app.model.entity;
 
+import com.fmatheus.app.controller.util.AppUtil;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -35,15 +36,16 @@ public class LivroEntity extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @Basic(optional = false)
     @NotNull
+    @Size(min = 5, max = 15)
     @Column(name = "isbn", nullable = false)
-    private Integer isbn;
+    private String isbn;
 
     @Basic(optional = false)
     @NotNull
@@ -54,8 +56,7 @@ public class LivroEntity extends BaseEntity {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_publicacao", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataPublicacao;
+    private LocalDate dataPublicacao;
 
     @Basic(optional = false)
     @NotNull
@@ -99,27 +100,30 @@ public class LivroEntity extends BaseEntity {
         this.id = id;
     }
 
-    public Integer getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Integer isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
     public String getTitulo() {
+        if (titulo != null) {
+            return AppUtil.convertFirstUppercaseCharacter(AppUtil.removeAccent(titulo));
+        }
         return titulo;
     }
 
     public void setTitulo(String titulo) {
-        this.titulo = titulo;
+        this.titulo = AppUtil.convertAllUppercaseCharacters(AppUtil.removeAccent(titulo));
     }
 
-    public Date getDataPublicacao() {
+    public LocalDate getDataPublicacao() {
         return dataPublicacao;
     }
 
-    public void setDataPublicacao(Date dataPublicacao) {
+    public void setDataPublicacao(LocalDate dataPublicacao) {
         this.dataPublicacao = dataPublicacao;
     }
 
